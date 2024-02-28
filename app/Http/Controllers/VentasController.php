@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+// se importan todos los modelos y variables de ssesion asi como todo aquel metodo que se vaya a usar
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Direccion;
@@ -14,22 +14,24 @@ class VentasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // se crea una funcion index que recibe un parametro
     public function index(Request $request)
     {
+        // se asigna una variable order y se trae la informacion de la vista
         $order = $request->input('order', 'asc');
         $nombreCliente = $request->input('nombreCliente');
-    
+        // se hace una consulta al modelo y un doble join
         $query = Ventas::select('venta.*', 'clients.Nombre as Nombre')
             ->join('clients', 'venta.Id_Cliente', '=', 'clients.Id')
             ->join('direccion', 'clients.Id', '=', 'direccion.Id_Cliente')
             ->orderBy('venta.fecha', $order);
-    
+        // se valida la informacion
         if ($nombreCliente) {
             $query->where('clients.Nombre', $nombreCliente);
         }
     
         $venta = $query->get();
-    
+        // se retorna una vista y la informacion obtenida
         return view('viewVenta.index', compact('venta', 'order'));
     }
 
@@ -39,9 +41,12 @@ class VentasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // se crea una funcion create 
     public function create()
     {       
+        // se hace una consulta
         $clients = Client::all();
+        // se retorna una vista
         return view('viewVenta.form', compact('clients'));
     }
 
@@ -51,21 +56,25 @@ class VentasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     // se crea una funcion store que recibe un parametro
     public function store(Request $request)
     {    
+        // se valida la informacion
         $request->validate([
             'cliente' => 'required', 
             'producto' => 'required|max:250',
             'estado' => 'required',
             'fecha' => 'required',
         ]);
+        // se crea una nueva venta y se guarda con una funcion save
         $Venta = new Ventas();
         $Venta->Id_Cliente = $request->input('cliente'); 
         $Venta->Producto = $request->input('producto'); 
         $Venta->Estado = $request->input('estado');
         $Venta->Fecha = $request->input('fecha');
         $Venta->save();
-        
+        // se redirige a la funcion index para que cargue la vista 
         return redirect()->route('venta.index');
     }
 
@@ -75,13 +84,7 @@ class VentasController extends Controller
      *
      */
 
-     public function filtrarPorCliente(Request $request)
-    {
-        $nombreCliente = $request->input('nombreCliente');
-        $ventasFiltradas = Venta::where('Nombre', 'like', '%' . $nombreCliente . '%')->get();
-
-        return view('ruta.a.vista', compact('ventasFiltradas'));
-    }
+    
     
     public function show($id, Request $request)
     {

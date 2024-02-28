@@ -1,18 +1,20 @@
 @extends('themes.base')
 
 @section('content')
-    <div class="conainer py-5 text-center">
+    <div class="container py-5 text-center">
         
         @if (isset($client))
         <h1>Editar Cliente</h1>
         @else
         <h1>Crear Cliente</h1>
         @endif
-
+         //se valida la exixtencia de esa variable
         @if (isset($client))
+        // se redirecciona al metodo update y se le adiciona una Id por medio de un metodo put
         <form action="{{ route('client.update', $client->Id) }}" method="post">
             @method('PUT');
         @else
+        // se redirecciona al metodo store 
         <form action="{{route('client.store')}}" method="post">
         @endif
         
@@ -42,6 +44,7 @@
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                   </select>
+                  // se valida la existencia de esa variable
                   @if (isset($client))
                   <button type="submit" class="btn btn-info">Actualizar Cliente</button>
                 @else

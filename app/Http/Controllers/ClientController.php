@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+// se importan todos los modelos y variables de ssesion asi como todo aquel metodo que se vaya a usar
 use App\Models\Client;
 use App\Models\Direction;
 use Illuminate\Http\Request;
@@ -36,12 +36,13 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $request->validate([
-            'name'=> 'required|max:15',
+            'name'=> 'required|max:250',
             'number'=> 'required|max:11',
-            'email'=> 'required|max:50'
+            'email'=> 'required|max:252'
         ]);
 
         $cliente = new Client();
