@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\VentasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,15 @@ use App\Http\Controllers\DirectionController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
+
+
 
 Route::resource('client', ClientController::class);
 Route::resource('direccion', DirectionController::class);
-//Route::put('client/{client}', [ClientController::class, 'update'])->name('client.update');
+Route::resource('venta', VentasController::class);
+
+Route::get('/ventas/filtrar-por-cliente', 'VentaController@filtrarPorCliente')->name('venta.filtrarPorCliente');
+
+
+

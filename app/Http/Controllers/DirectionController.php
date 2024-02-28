@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Direction;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
+use App\Models\Ventas;
 use Illuminate\Http\Request;
 
 class DirectionController extends Controller
@@ -115,17 +116,14 @@ class DirectionController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Direction $direccion)
+    public function destroy(Request $request, $id)
     {
-        $direccionId = $direccion->id;
-    
-    
-        $ventasAsociadas = Sale::where('Id_Direccion', $direccionId)->exists();
+        $ventasAsociadas = Ventas::where('Id_Direccion', $id)->exists();
     
         if ($ventasAsociadas) {
             return redirect()->route('direccion.index')->with('error', 'No se puede eliminar la dirección porque tiene ventas asociadas.');
         } else {
-            
+            $direccion = Direction::findOrFail($id);
             $direccion->delete();
             return redirect()->route('direccion.index')->with('mensaje', 'Dirección eliminada con éxito');
         }

@@ -7,6 +7,6 @@
         </h1>
         <a href="{{route('client.index')}}" class="btn btn-primary">Ir a Clientes</a>
         <a href="{{route('direccion.index')}}" class="btn btn-primary">Ir a Direcciones</a>
-        
+        <a href="{{route('venta.index')}}" class="btn btn-primary">Ir a Ventas</a>
     </div>
 @endsection

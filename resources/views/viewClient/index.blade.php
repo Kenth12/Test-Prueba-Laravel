@@ -1,7 +1,7 @@
 @extends('themes.base')
 
 @section('content')
-    <div class="conainer py-5 text-center">
+    <div class="container py-5 text-center">    
         <h1 >
             Listado de Clientes
         </h1>
@@ -10,7 +10,7 @@
             {{Session::get('mensaje')}}
         </div>    
         @endif
-        <table class="table">
+        <table class="table table-striped table-hover">
             <thead>
                 <th>Id Cliente</th>
                 <th>Nombre</th>
@@ -43,5 +43,6 @@
             </thead>
         </table>
         <a href="{{route('client.create')}}" class="btn btn-primary">Crear Clientes</a>
+        <a href="{{route('welcome')}}" class="btn btn-secondary">Regresar al Home</a>
     </div>
 @endsection
